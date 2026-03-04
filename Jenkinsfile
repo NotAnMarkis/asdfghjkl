@@ -43,10 +43,10 @@ pipeline {
                 }
             }
             steps {
-                // Эти команды выполнятся внутри контейнера composer:latest
-                // Рабочая директория контейнера будет /app, которая содержит ваш код
-                sh 'composer install --no-dev --optimize-autoloader'
-                sh 'php artisan test --env=testing'
+                dir('/app') { // <--- Добавляем этот шаг!
+                    sh 'composer install --no-dev --optimize-autoloader'
+                    sh 'php artisan test --env=testing'
+                }
             }
         }
 
