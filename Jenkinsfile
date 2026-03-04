@@ -9,6 +9,15 @@ pipeline {
     }
 
     stages {
+        stage('Debug Docker Path') {
+            steps {
+                sh 'echo "User: $(whoami)"'
+                sh 'echo "PATH: $PATH"'
+                sh 'which composer' // Покажет полный путь к docker, если найден
+                sh 'composer about' // Попытка выполнить docker
+            }
+        }
+        
         stage('Checkout') {
             steps {
                 // Получаем код из репозитория
