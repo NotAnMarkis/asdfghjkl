@@ -1,5 +1,10 @@
 pipeline {
-    agent any // Запускает пайплайн на любом доступном агенте
+    agent {
+        docker {
+            image 'composer:latest'
+            args '-u 0:0' 
+        }
+    } 
 
     environment {
         // Имя вашего образа в Docker Hub
@@ -9,6 +14,12 @@ pipeline {
     }
 
     stages {
+        stage('Install Dependencies') {
+            steps {
+                sh 'composer install'
+            }
+        }
+        
         stage('Checkout') {
             steps {
                 // Получаем код из репозитория
