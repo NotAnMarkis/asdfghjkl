@@ -1,10 +1,5 @@
 pipeline {
-    agent {
-        docker {
-            image 'composer:latest'
-            args '-u 0:0' 
-        }
-    } 
+    agent any
 
     environment {
         // Имя вашего образа в Docker Hub
