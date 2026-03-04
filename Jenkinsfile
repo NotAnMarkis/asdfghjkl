@@ -14,14 +14,6 @@ pipeline {
     }
 
     stages {
-        stage('Build Docker Image') {
-            steps {
-                // Используйте полный путь к docker
-                sh '/usr/bin/docker build -t notanmarkis2/my-laravel-app:7 .'
-                // Если `which docker` дал другой путь, используйте его.
-            }
-        }
-        
         stage('Debug Docker Path') {
             steps {
                 sh 'echo "User: $(whoami)"'
@@ -41,6 +33,7 @@ pipeline {
         stage('Build Docker Image') {
             steps {
                 script {
+                    sh '/usr/bin/docker build -t notanmarkis2/my-laravel-app:7 .'
                     // Собираем Docker-образ
                     dockerImage = docker.build("${env.DOCKER_IMAGE}:${env.BUILD_ID}")
                 }
