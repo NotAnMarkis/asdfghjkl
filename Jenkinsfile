@@ -14,15 +14,6 @@ pipeline {
     }
 
     stages {
-        stage('Debug Docker Path') {
-            steps {
-                sh 'echo "User: $(whoami)"'
-                sh 'echo "PATH: $PATH"'
-                sh 'which docker' // Покажет полный путь к docker, если найден
-                sh 'docker --version' // Попытка выполнить docker
-            }
-        }
-        
         stage('Checkout') {
             steps {
                 // Получаем код из репозитория
