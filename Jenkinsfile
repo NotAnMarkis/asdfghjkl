@@ -36,15 +36,17 @@ pipeline {
         }
 
         stage('Run Tests') {
-            steps {
-                script {
-                    // Запускаем контейнер для выполнения тестов (например, PHPUnit)
-                    // '--rm' удалит контейнер после выполнения команды
-                    dockerImage.inside("--rm") {
-                        sh '/usr/local/bin/composer install --no-dev --optimize-autoloader'
-                        sh 'php artisan test --env=testing'
-                    }
+            agent { // <--- Определяем специализированный агент только для этой стадии
+                docker {
+                    image 'composer:latest' // Используем образ с Composer
+                    args '-u 0:0 -v ${PWD}:/app' // Пробрасываем текущую рабочую директорию Jenkins в контейнер
                 }
+            }
+            steps {
+                // Эти команды выполнятся внутри контейнера composer:latest
+                // Рабочая директория контейнера будет /app, которая содержит ваш код
+                sh 'composer install --no-dev --optimize-autoloader'
+                sh 'php artisan test --env=testing'
             }
         }
 
