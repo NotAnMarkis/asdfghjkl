@@ -14,12 +14,6 @@ pipeline {
     }
 
     stages {
-        stage('Install Dependencies') {
-            steps {
-                sh 'composer install'
-            }
-        }
-        
         stage('Checkout') {
             steps {
                 // Получаем код из репозитория
