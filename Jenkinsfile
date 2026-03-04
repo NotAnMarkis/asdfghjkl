@@ -32,7 +32,7 @@ pipeline {
                     // Запускаем контейнер для выполнения тестов (например, PHPUnit)
                     // '--rm' удалит контейнер после выполнения команды
                     dockerImage.inside("--rm") {
-                        sh 'php /var/lib/jenkins/composer.phar install --no-dev --optimize-autoloader'
+                        sh '/usr/local/bin/composer install --no-dev --optimize-autoloader'
                         sh 'php artisan test --env=testing'
                     }
                 }
